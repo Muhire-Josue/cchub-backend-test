@@ -10,6 +10,15 @@ import message from '../../../../constants/responseMessages';
 
 export const createOne = async (req: Request, res: Response): Promise<any> => {
   const requestPayload = req.body;
+  const { filename } = requestPayload;
+  const foundAsset = await Assets.findOne({ where: { filename } });
+  if (foundAsset) {
+    return jsonResponse({
+      res,
+      status: statusCodes.CONFLICT,
+      error: message.assetExist,
+    }); 
+  }
   const assest = await Assets.create(requestPayload);
   return jsonResponse({
     res,

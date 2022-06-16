@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from '../../../../../app';
-import { BAD_REQUEST, CREATED } from '../../../../../constants/statusCodes';
+import { BAD_REQUEST, CONFLICT, CREATED } from '../../../../../constants/statusCodes';
 import message from '../../../../../constants/responseMessages';
 import { urlPrefix } from '../../../../../constants/shared';
 
@@ -33,5 +33,13 @@ describe('Assets tests', () => {
     const res = await request(app).post(`${urlPrefix}/assets`).send(payload2);
     expect(res.body.status).toBe(BAD_REQUEST);
     expect(res.body).toHaveProperty('errors');
+  });
+  test('should not create a dupicate asset', async () => {
+    const res = await request(app).post(`${urlPrefix}/assets`).send(payload1);
+
+    expect(res.body.status).toBe(CONFLICT);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toBe(message.assetExist);
+
   });
 });
