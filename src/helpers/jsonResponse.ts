@@ -1,8 +1,5 @@
 import { Response } from 'express';
 import { OK } from 'constants/statusCodes';
-import Transaction from 'models/Transaction';
-import User from 'models/User';
-
 interface ResponseParams {
   res: Response;
   status?: number;
@@ -11,13 +8,6 @@ interface ResponseParams {
   message?: string;
   errorCode?: string;
   errors?: any;
-  meta?: {
-    total?: number;
-    page?: number;
-    pages?: number;
-    recentTransactions?: Array<Transaction>;
-    user?: User;
-  };
   accessCode?: number;
   [key: string]: any;
 }
