@@ -1,0 +1,33 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:json/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript"
+  ],
+  "ignorePatterns": "**/*.test.js",
+  "settings": {
+    "import/resolver": {
+      "babel-module": {},
+      "typescript": {},
+      "jest": {
+        "jestConfigFile": "./jest.config.js"
+      }
+    },
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "ts": "never"
+      }
+    ]
+  },
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off"
+  }
+}
