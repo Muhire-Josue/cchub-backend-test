@@ -29,4 +29,6 @@ export const updateOneRule = Joi.object().keys({
   score_type_2: Joi.number().integer().min(0).max(100),
   score_type_3: Joi.number().integer().min(0).max(100),
 });
-
+export const getOneRule = Joi.object().keys({
+  id: Joi.number().integer(),
+});

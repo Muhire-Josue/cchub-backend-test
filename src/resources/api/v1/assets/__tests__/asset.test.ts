@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from '../../../../../app';
-import { BAD_REQUEST, CONFLICT, CREATED, OK } from '../../../../../constants/statusCodes';
+import { BAD_REQUEST, CONFLICT, CREATED, OK, NOT_FOUND } from '../../../../../constants/statusCodes';
 import message from '../../../../../constants/responseMessages';
 import { urlPrefix } from '../../../../../constants/shared';
 
@@ -62,9 +62,26 @@ describe('Assets tests', () => {
     expect(res.body).toHaveProperty('error');
     expect(res.body.error).toBe(message.invalidExtension);
   });
+  test('should not update an asset if not found', async () => {
+    const res = await request(app).put(`${urlPrefix}/assets/${0}`).send(payload3);
+    expect(res.body.status).toBe(NOT_FOUND);
+    expect(res.body.error).toBe(message.notFound);
+  });
+
   test('should update an asset', async () => {
     const res = await request(app).put(`${urlPrefix}/assets/${id}`).send(payload3);
     expect(res.body.status).toBe(OK);
     expect(res.body.message).toBe(message.assetUpdated);
+  });
+
+  test('should get an asset', async () => {
+    const res = await request(app).get(`${urlPrefix}/assets/${id}`);
+    expect(res.body.status).toBe(OK);
+    expect(res.body).toHaveProperty('data');
+  });
+  test('should get not find an asset', async () => {
+    const res = await request(app).get(`${urlPrefix}/assets/${0}`);
+    expect(res.body.status).toBe(NOT_FOUND);
+    expect(res.body.error).toBe(message.notFound);
   });
 });
