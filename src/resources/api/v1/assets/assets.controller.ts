@@ -82,3 +82,20 @@ export const updateOne = async (req: Request, res: Response): Promise<any> => {
     message: message.assetUpdated,
   });
 };
+
+export const getOne = async (req: Request, res: Response): Promise<any> => {
+  const { id } = req.params;
+  const asset = await Assets.findOne({ where: { id } });
+  if (!asset) {
+    return jsonResponse({
+      res,
+      status: statusCodes.NOT_FOUND,
+      error: message.notFound,
+    });
+  }
+  return jsonResponse({
+    res,
+    status: statusCodes.OK,
+    data: asset,
+  });
+}
