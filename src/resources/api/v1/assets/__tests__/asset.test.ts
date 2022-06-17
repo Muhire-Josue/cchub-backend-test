@@ -74,14 +74,28 @@ describe('Assets tests', () => {
     expect(res.body.message).toBe(message.assetUpdated);
   });
 
+  test('should validate the id before updating an asset', async () => {
+    const res = await request(app).get(`${urlPrefix}/assets/aaa`);
+    expect(res.body.status).toBe(BAD_REQUEST);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toBe(message.invalidID);
+  });
+
   test('should get an asset', async () => {
     const res = await request(app).get(`${urlPrefix}/assets/${id}`);
     expect(res.body.status).toBe(OK);
     expect(res.body).toHaveProperty('data');
   });
+  
   test('should get not find an asset', async () => {
     const res = await request(app).get(`${urlPrefix}/assets/${0}`);
     expect(res.body.status).toBe(NOT_FOUND);
     expect(res.body.error).toBe(message.notFound);
+  });
+  test('should validate the id before getting an asset', async () => {
+    const res = await request(app).get(`${urlPrefix}/assets/aaa`);
+    expect(res.body.status).toBe(BAD_REQUEST);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toBe(message.invalidID);
   });
 });

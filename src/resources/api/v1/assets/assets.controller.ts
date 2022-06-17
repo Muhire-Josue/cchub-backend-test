@@ -59,6 +59,15 @@ export const createOne = async (req: Request, res: Response): Promise<any> => {
 export const updateOne = async (req: Request, res: Response): Promise<any> => {
   const {score_type_1, score_type_2, score_type_3} = req.body;
   const { id } = req.params;
+
+  if (isNaN(parseInt(id))) {
+    return jsonResponse({
+      res,
+      status: statusCodes.BAD_REQUEST,
+      error: message.invalidID,
+    });
+  }
+
   const foundAsset = await Assets.findOne({ where: { id } });
   if (!foundAsset) {
     return jsonResponse({
@@ -67,9 +76,9 @@ export const updateOne = async (req: Request, res: Response): Promise<any> => {
       error: message.notFound,
     });
   }
-  if (score_type_1) {
-    await Assets.increment('score_type_1', { by: score_type_1, where: { id } });
-  }
+    if (score_type_1) {
+      await Assets.increment('score_type_1', { by: score_type_1, where: { id } });
+    }
   if (score_type_2) {
     await Assets.increment('score_type_2', { by: score_type_2, where: { id } });
   }
@@ -85,6 +94,15 @@ export const updateOne = async (req: Request, res: Response): Promise<any> => {
 
 export const getOne = async (req: Request, res: Response): Promise<any> => {
   const { id } = req.params;
+
+  if (isNaN(parseInt(id))) {
+    return jsonResponse({
+      res,
+      status: statusCodes.BAD_REQUEST,
+      error: message.invalidID,
+    });
+  }
+
   const asset = await Assets.findOne({ where: { id } });
   if (!asset) {
     return jsonResponse({
