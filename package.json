@@ -43,6 +43,7 @@
     "@slack/web-api": "^6.7.2",
     "@types/minimist": "^1.2.1",
     "app-root-path": "^3.0.0",
+    "babel-node": "0.0.1-security",
     "bcryptjs": "^2.4.3",
     "celebrate": "^12.1.1",
     "cors": "^2.8.5",
