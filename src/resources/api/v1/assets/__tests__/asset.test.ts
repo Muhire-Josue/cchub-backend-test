@@ -75,7 +75,7 @@ describe('Assets tests', () => {
   });
 
   test('should validate the id before updating an asset', async () => {
-    const res = await request(app).get(`${urlPrefix}/assets/aaa`);
+    const res = await request(app).put(`${urlPrefix}/assets/aaaaaa`).send(payload3);
     expect(res.body.status).toBe(BAD_REQUEST);
     expect(res.body).toHaveProperty('error');
     expect(res.body.error).toBe(message.invalidID);
@@ -97,5 +97,29 @@ describe('Assets tests', () => {
     expect(res.body.status).toBe(BAD_REQUEST);
     expect(res.body).toHaveProperty('error');
     expect(res.body.error).toBe(message.invalidID);
+  });
+
+  test('should get an asset score average', async () => {
+    const res = await request(app).get(
+      `${urlPrefix}/assets/score/average?type=video&score_type=score_type_2`,
+    );
+    expect(res.body.status).toBe(OK);
+    expect(res.body).toHaveProperty('data');
+  });
+  test('should not get an asset score average given invalid score type', async () => {
+    const res = await request(app).get(
+      `${urlPrefix}/assets/score/average?type=video&score_type=invalidScoreType`,
+    );
+    expect(res.body.status).toBe(BAD_REQUEST);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toBe(message.invalidScoreType);
+  });
+  test('should not get an asset score average given invalid score type', async () => {
+    const res = await request(app).get(
+      `${urlPrefix}/assets/score/average?type=o=invalidAssetType&score_type=score_type_2`,
+    );
+    expect(res.body.status).toBe(BAD_REQUEST);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toBe(message.invalidAssetType);
   });
 });
