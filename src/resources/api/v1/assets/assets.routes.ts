@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { celebrate } from 'celebrate';
 import { createOne, updateOne, getOne } from './assets.controller';
-import { createOneRule, updateOneRule, getOneRule } from './asset.validator';
+import { createOneRule, updateOneRule } from './asset.validator';
 
 const router = Router();
 
@@ -21,12 +21,6 @@ router.put(
   updateOne,
 );
 
-router.get(
-  '/:id',
-  celebrate({
-    body: getOneRule,
-  }),
-  getOne,
-);
+router.get('/:id', getOne);
 
 export default router;

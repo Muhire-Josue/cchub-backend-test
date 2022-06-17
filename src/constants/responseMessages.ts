@@ -4,5 +4,6 @@ export default {
   welcomeAPI: 'Welcome Api',
   assetExist: 'Asset exist',
   notFound: 'Asset not found',
-  invalidExtension: 'Invalid file extension'
+  invalidExtension: 'Invalid file extension',
+  invalidID: 'Invalid asset id',
 };
