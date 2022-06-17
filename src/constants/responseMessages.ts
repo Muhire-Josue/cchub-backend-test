@@ -6,4 +6,6 @@ export default {
   notFound: 'Asset not found',
   invalidExtension: 'Invalid file extension',
   invalidID: 'Invalid asset id',
+  invalidScoreType: 'Invalid score type',
+  invalidAssetType: 'Invalid score type',
 };

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { celebrate } from 'celebrate';
-import { createOne, updateOne, getOne } from './assets.controller';
+import { createOne, updateOne, getOne, getScoreAverage } from './assets.controller';
 import { createOneRule, updateOneRule } from './asset.validator';
 
 const router = Router();
@@ -22,5 +22,6 @@ router.put(
 );
 
 router.get('/:id', getOne);
+router.get('/score/average', getScoreAverage);
 
 export default router;
